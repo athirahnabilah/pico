@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/pico/static/css/main.ca67ef22.css",
-    "main.js": "/pico/static/js/main.915c4a84.js",
+    "main.js": "/pico/static/js/main.441125b1.js",
     "static/js/453.669f5133.chunk.js": "/pico/static/js/453.669f5133.chunk.js",
     "index.html": "/pico/index.html",
     "main.ca67ef22.css.map": "/pico/static/css/main.ca67ef22.css.map",
-    "main.915c4a84.js.map": "/pico/static/js/main.915c4a84.js.map",
+    "main.441125b1.js.map": "/pico/static/js/main.441125b1.js.map",
     "453.669f5133.chunk.js.map": "/pico/static/js/453.669f5133.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ca67ef22.css",
-    "static/js/main.915c4a84.js"
+    "static/js/main.441125b1.js"
   ]
 }
