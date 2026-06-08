@@ -203,7 +203,7 @@ function App() {
                 <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0-1H14v1h1.5a.5.5 0 0 1 0-1H14v1h1.5a.5.5 0 0 1 0-1H14v1h1.5a.5.5 0 0 1 0-1H14A2.5 2.5 0 0 1 11.5 14v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0m-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3z"/>
               </svg>
             </div>
-            <h4 className="fw-bold m-0 text-dark">IoT Enterprise Portal</h4>
+            <h4 className="fw-bold m-0 text-dark">IoT Vest Portal</h4>
             <p className="text-muted small mb-0">Sign in to manage edge processing nodes</p>
           </div>
           <form onSubmit={(e) => {
