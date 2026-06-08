@@ -36,31 +36,31 @@ const cleanNumericValue = (val) => {
   return match ? parseFloat(match[0]) : 0;
 };
 
-// --- ENLARGED CUSTOM GAUGE COMPONENTS ---
+// --- HIGH VISIBILITY CUSTOM GAUGE COMPONENTS ---
 
-// 1. Expanded Semi-Circular Gauge (For Gyro Magnitude)
+// 1. Large Semi-Circular Gauge (For Gyro Magnitude)
 const SemiGauge = ({ value, min = 0, max = 100, title, unit }) => {
   const percentage = Math.min(Math.max((value - min) / (max - min), 0), 1);
   const rotation = percentage * 180 - 90; 
 
   return (
     <div className="card border-0 shadow-sm rounded-3 p-4 bg-white h-100 d-flex flex-column align-items-center justify-content-between">
-      <div className="w-100 text-start">
-        <p className="text-uppercase tracking-wider text-muted fw-bold mb-4" style={{ fontSize: '0.85rem', letterSpacing: '0.05em' }}>{title}</p>
+      <div className="w-100 text-center">
+        <p className="text-uppercase tracking-wider text-muted fw-bold mb-3" style={{ fontSize: '0.75rem', letterSpacing: '0.05em' }}>{title}</p>
       </div>
-      {/* Increased container footprint from 160x85 to 240x130 */}
-      <div style={{ position: 'relative', width: '240px', height: '130px', overflow: 'hidden' }} className="my-3">
-        {/* Thickened Track */}
+      
+      <div style={{ position: 'relative', width: '240px', height: '130px', overflow: 'hidden' }} className="my-2">
+        {/* Track */}
         <div style={{
           position: 'absolute', width: '240px', height: '240px', 
           borderRadius: '50%', border: '20px solid #f1f5f9', top: 0, left: 0
         }} />
-        {/* Center Pin */}
+        {/* Pin Base */}
         <div style={{
           position: 'absolute', width: '14px', height: '14px', borderRadius: '50%',
           backgroundColor: '#334155', bottom: '-2px', left: '113px', zIndex: 3
         }} />
-        {/* Needle Pin */}
+        {/* Needle */}
         <div style={{
           position: 'absolute', width: '4px', height: '105px', backgroundColor: '#ef4444',
           bottom: 0, left: '118px', transformOrigin: 'bottom center',
@@ -69,7 +69,6 @@ const SemiGauge = ({ value, min = 0, max = 100, title, unit }) => {
         }} />
       </div>
       <div className="text-center mt-2">
-        {/* Bumped to display-5 for instant visibility */}
         <span className="display-6 fw-bold text-dark m-0">{value.toFixed(2)}</span>
         <span className="text-secondary fw-semibold fs-5 ms-2">{unit}</span>
       </div>
@@ -77,9 +76,9 @@ const SemiGauge = ({ value, min = 0, max = 100, title, unit }) => {
   );
 };
 
-// 2. Expanded Circular Dial Gauge
+// 2. Large Circular Dial Gauge (For BME280 Indexes)
 const CircularDial = ({ value, min = 0, max = 100, title, unit, color = "#3b82f6" }) => {
-  const radius = 68; // Increased radius
+  const radius = 68; 
   const circumference = 2 * Math.PI * radius;
   const percentage = Math.min(Math.max((value - min) / (max - min), 0), 1);
   const strokeDashoffset = circumference - percentage * circumference;
@@ -87,12 +86,10 @@ const CircularDial = ({ value, min = 0, max = 100, title, unit, color = "#3b82f6
   return (
     <div className="d-flex flex-column align-items-center justify-content-center p-3">
       <p className="text-uppercase tracking-wider text-muted fw-bold mb-4" style={{ fontSize: '0.8rem', letterSpacing: '0.05em' }}>{title}</p>
-      {/* Increased structural layout space to 160x160 */}
+      
       <div style={{ position: 'relative', width: '160px', height: '160px' }}>
         <svg width="160" height="160" viewBox="0 0 160 160" style={{ transform: 'rotate(-90deg)' }}>
-          {/* Background circle - bolder stroke */}
           <circle cx="80" cy="80" r={radius} fill="transparent" stroke="#f1f5f9" strokeWidth="12" />
-          {/* Foreground progress circle */}
           <circle 
             cx="80" cy="80" r={radius} fill="transparent" stroke={color} strokeWidth="12" 
             strokeDasharray={circumference} strokeDashoffset={strokeDashoffset}
@@ -101,11 +98,10 @@ const CircularDial = ({ value, min = 0, max = 100, title, unit, color = "#3b82f6
         </svg>
         <div style={{
           position: 'absolute', top: 0, left: 0, width: '160px', height: '160px',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifycontent: 'center', textAlign: 'center'
-        }} className="justify-content-center">
-          {/* Drastically boosted typography sizes */}
-          <span className="display-6 fw-bold text-dark m-0 font-monospace" style={{ transform: 'translateY(12px)' }}>{value.toFixed(1)}</span>
-          <span className="text-muted fw-medium mt-2" style={{ fontSize: '0.85rem', transform: 'translateY(12px)' }}>{unit}</span>
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'
+        }}>
+          <span className="display-6 fw-bold text-dark m-0 font-monospace" style={{ transform: 'translateY(4px)' }}>{value.toFixed(1)}</span>
+          <span className="text-muted fw-medium mt-1" style={{ fontSize: '0.85rem', transform: 'translateY(4px)' }}>{unit}</span>
         </div>
       </div>
     </div>
@@ -247,7 +243,7 @@ function App() {
             </div>
             <ul className="nav flex-row flex-md-column gap-2 mb-3 mb-md-0">
               <li className="nav-item w-100">
-                <a href="#dashboard" className="nav-link text-white bg-secondary bg-opacity-25 rounded-2 py-2.5 px-3 fw-medium">Dashboard Overview</a>
+                <a href="#dashboard" className="nav-link text-white bg-secondary bg-opacity-25 rounded-2 py-2.5 px-3 fw-medium">Overview</a>
               </li>
             </ul>
           </div>
@@ -262,24 +258,71 @@ function App() {
 
         {/* MAIN DASHBOARD BLOCK */}
         <div className="col-12 col-md-9 col-lg-10 p-4 p-md-5">
-          <div className="mb-4">
-            <h2 className="fw-bold text-dark m-0">IoT Core Telemetry</h2>
-            <p className="text-muted m-0">Stream analytical execution variables from hardware edge boundaries</p>
+          
+          {/* UPDATED HEADER: FLOATS ACTUATOR CONTROL TO THE TOP RIGHT */}
+          <div className="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4 pb-2">
+            <div>
+              <h2 className="fw-bold text-dark m-0">IoT Monitoring</h2>
+              <p className="text-muted m-0">Real-time telemetry stream from edge units</p>
+            </div>
+            
+            {/* COMPACTED TOP-RIGHT ACTUATOR TOGGLE PANEL */}
+            <div className="card border-0 shadow-sm rounded-3 py-2.5 px-4 bg-white d-flex flex-row align-items-center gap-3 border" style={{ minWidth: '240px' }}>
+              <div className="me-2">
+                <h6 className="fw-bold text-dark m-0" style={{ fontSize: '0.9rem' }}>Buzzer Control</h6>
+                <span className="small fw-bold tracking-wider" style={{ fontSize: '0.75rem', color: sensorData.esp32.buzzer_button === "on" ? '#10b981' : '#64748b' }}>
+                  {sensorData.esp32.buzzer_button === "on" ? "ACTIVE" : "MUTED"}
+                </span>
+              </div>
+              <div className="ms-auto" style={{ position: 'relative', display: 'inline-block', width: '46px', height: '24px' }}>
+                <input
+                  type="checkbox"
+                  id="buzzerToggle"
+                  checked={sensorData.esp32.buzzer_button === "on"}
+                  onChange={toggleBuzzer}
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <label 
+                  htmlFor="buzzerToggle"
+                  style={{
+                    position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundColor: sensorData.esp32.buzzer_button === "on" ? '#10b981' : '#cbd5e1',
+                    transition: '.2s', borderRadius: '24px'
+                  }}
+                >
+                  <span style={{
+                    position: 'absolute', height: '18px', width: '18px', left: '3px', bottom: '3px',
+                    backgroundColor: 'white', transition: '.2s', borderRadius: '50%',
+                    transform: sensorData.esp32.buzzer_button === "on" ? 'translateX(22px)' : 'translateX(0)'
+                  }} />
+                </label>
+              </div>
+            </div>
           </div>
 
           {/* MAIN TOP ROW GRID */}
           <div className="row g-4 mb-4">
-            {/* AI STATE GAUGE */}
+            
+            {/* MATCHED SCREENSHOT MOCKUP FOR AI STATE */}
             <div className="col-12 col-sm-6">
-              <div className="card h-100 border-0 shadow-sm rounded-3 p-4 bg-white d-flex flex-column align-items-start justify-content-between">
-                <p className="text-uppercase tracking-wider text-muted fw-bold mb-3" style={{ fontSize: '0.85rem', letterSpacing: '0.05em' }}>AI Status State</p>
-                <div className="w-100 d-flex justify-content-center align-items-center flex-grow-1 my-3">
-                  <div className={`px-5 py-3 rounded-5 fw-bold text-center border display-6 ${
-                    sensorData.ai_decision.state === "Resting" 
-                      ? "bg-success-subtle text-success border-success-subtle" 
-                      : "bg-warning-subtle text-warning border-warning-subtle"
-                  }`} style={{ minWidth: '200px' }}>
-                    ● {sensorData.ai_decision.state || "Unknown"}
+              <div className="card h-100 border-0 shadow-sm rounded-3 p-4 bg-white d-flex flex-column align-items-center justify-content-center">
+                <p className="text-uppercase tracking-wider text-muted fw-bold mb-3 w-100 text-center" style={{ fontSize: '0.75rem', letterSpacing: '0.05em' }}>
+                  AI Status State
+                </p>
+                <div className="w-100 d-flex justify-content-center align-items-center my-auto px-2">
+                  <div 
+                    className="w-100 text-center fw-bold" 
+                    style={{
+                      backgroundColor: sensorData.ai_decision.state === "Resting" ? "#eef6f3" : "#fff9db",
+                      color: sensorData.ai_decision.state === "Resting" ? "#137347" : "#f59f00",
+                      border: `1px solid ${sensorData.ai_decision.state === "Resting" ? "#d1e7dd" : "#ffe3e3"}`,
+                      borderRadius: "16px",
+                      padding: "1.25rem 2rem",
+                      fontSize: "1.75rem",
+                      maxWidth: "460px"
+                    }}
+                  >
+                    {sensorData.ai_decision.state || "Unknown"}
                   </div>
                 </div>
               </div>
@@ -291,7 +334,7 @@ function App() {
                 value={cleanNumericValue(sensorData.ai_decision.gyro_mag)} 
                 min={0} 
                 max={100} 
-                title="Gyro Magnitude Vector" 
+                title="Gyro Magnitude Gauge" 
                 unit="rad/s" 
               />
             </div>
@@ -300,11 +343,11 @@ function App() {
           {/* LOWER LAYOUT GRID */}
           <div className="row g-4">
             
-            {/* ENLARGED ENVIRONMENT GAUGES */}
+            {/* BME280 ENVIRO INSTRUMENTS BLOCK */}
             <div className="col-12">
               <div className="card border-0 shadow-sm rounded-3 bg-white">
                 <div className="card-header bg-white border-bottom border-light py-3.5 px-4">
-                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>BME280 Environment Matrix</h5>
+                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>BME280 Environmental Instrument Gauges</h5>
                 </div>
                 <div className="p-4">
                   <div className="row g-4 text-center justify-content-around">
@@ -317,13 +360,13 @@ function App() {
                     <div className="col-12 col-sm-4">
                       <CircularDial 
                         value={cleanNumericValue(sensorData.data.humidity)} 
-                        min={0} max={100} title="Relative Humidity" unit="% RH" color="#06b6d4" 
+                        min={0} max={100} title="Humidity Matrix" unit="% RH" color="#06b6d4" 
                       />
                     </div>
                     <div className="col-12 col-sm-4">
                       <CircularDial 
                         value={cleanNumericValue(sensorData.data.pressure)} 
-                        min={900} max={1100} title="Barometric Pressure" unit="hPa" color="#10b981" 
+                        min={900} max={1100} title="Atmospheric Pressure" unit="hPa" color="#10b981" 
                       />
                     </div>
                   </div>
@@ -331,85 +374,47 @@ function App() {
               </div>
             </div>
 
-            {/* ACCELEROMETER MODULE */}
+            {/* ACCELEROMETER MATRIX */}
             <div className="col-lg-6">
               <div className="card border-0 shadow-sm rounded-3 bg-white h-100">
                 <div className="card-header bg-white border-bottom border-light py-3.5 px-4">
-                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>Linear Inertial Acceleration</h5>
+                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>Accelerometer Matrix</h5>
                 </div>
                 <div className="p-4">
                   <div className="d-flex justify-content-between py-3 border-bottom border-light fs-5">
-                    <span className="text-secondary">X-Axis G-Force</span>
+                    <span className="text-secondary">X-Axis Value</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.accel_x ?? "--"}</span>
                   </div>
                   <div className="d-flex justify-content-between py-3 border-bottom border-light fs-5">
-                    <span className="text-secondary">Y-Axis G-Force</span>
+                    <span className="text-secondary">Y-Axis Value</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.accel_y ?? "--"}</span>
                   </div>
                   <div className="d-flex justify-content-between py-3 pb-1 fs-5">
-                    <span className="text-secondary">Z-Axis G-Force</span>
+                    <span className="text-secondary">Z-Axis Value</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.accel_z ?? "--"}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* GYROSCOPE MODULE */}
+            {/* GYROSCOPE MATRIX */}
             <div className="col-lg-6">
               <div className="card border-0 shadow-sm rounded-3 bg-white h-100">
                 <div className="card-header bg-white border-bottom border-light py-3.5 px-4">
-                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>Rotational Velocity Matrix</h5>
+                  <h5 className="m-0 fw-bold text-dark" style={{ fontSize: '1rem' }}>Gyroscope Matrix</h5>
                 </div>
                 <div className="p-4">
                   <div className="d-flex justify-content-between py-3 border-bottom border-light fs-5">
-                    <span className="text-secondary">X-Axis Displacement</span>
+                    <span className="text-secondary">X-Axis Rotational</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.gyro_x ?? "--"}</span>
                   </div>
                   <div className="d-flex justify-content-between py-3 border-bottom border-light fs-5">
-                    <span className="text-secondary">Y-Axis Displacement</span>
+                    <span className="text-secondary">Y-Axis Rotational</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.gyro_y ?? "--"}</span>
                   </div>
                   <div className="d-flex justify-content-between py-3 pb-1 fs-5">
-                    <span className="text-secondary">Z-Axis Displacement</span>
+                    <span className="text-secondary">Z-Axis Rotational</span>
                     <span className="fw-bold font-monospace text-dark">{sensorData.data.gyro_z ?? "--"}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ACTUATOR CONTROL PANEL */}
-            <div className="col-12">
-              <div className="card border-0 shadow-sm rounded-3 p-4 bg-white d-flex flex-row align-items-center justify-content-between">
-                <div>
-                  <h5 className="fw-bold text-dark m-0" style={{ fontSize: '1rem' }}>Node Alarm Actuator</h5>
-                  <p className="text-muted small m-0 d-none d-sm-block">Dispatch immediate physical sound alerts directly into hardware buzzers</p>
-                </div>
-                <div className="d-flex align-items-center">
-                  <span className="me-3 small fw-bold tracking-wider fs-6" style={{ color: sensorData.esp32.buzzer_button === "on" ? '#10b981' : '#64748b' }}>
-                    {sensorData.esp32.buzzer_button === "on" ? "EMISSION ACTIVE" : "SIGNAL MUTED"}
-                  </span>
-                  <div style={{ position: 'relative', display: 'inline-block', width: '50px', height: '26px' }}>
-                    <input
-                      type="checkbox"
-                      id="buzzerToggle"
-                      checked={sensorData.esp32.buzzer_button === "on"}
-                      onChange={toggleBuzzer}
-                      style={{ opacity: 0, width: 0, height: 0 }}
-                    />
-                    <label 
-                      htmlFor="buzzerToggle"
-                      style={{
-                        position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0,
-                        backgroundColor: sensorData.esp32.buzzer_button === "on" ? '#10b981' : '#cbd5e1',
-                        transition: '.2s', borderRadius: '26px'
-                      }}
-                    >
-                      <span style={{
-                        position: 'absolute', height: '20px', width: '20px', left: '3px', bottom: '3px',
-                        backgroundColor: 'white', transition: '.2s', borderRadius: '50%',
-                        transform: sensorData.esp32.buzzer_button === "on" ? 'translateX(24px)' : 'translateX(0)'
-                      }} />
-                    </label>
                   </div>
                 </div>
               </div>
